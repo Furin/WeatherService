@@ -1,4 +1,4 @@
-// Last updated by Damian Orlikowski on 4/16/2013
+// Last updated by Nick Husby on 4/17/2013
 
 $(function() {
 
@@ -7,7 +7,10 @@ $(function() {
 
     // Reference to form
     $weatherService = $('#weatherService');
-
+    
+    // Reference to results container
+    $results = $("#results");
+    
     // Setup form event on submit button
     $weatherService.submit(function(){
         captureZipCode();
@@ -22,8 +25,9 @@ $(function() {
         $.ajax({
             url: url,
             success: function(data) {
-                var currentConditions = JSON.parse(data);
+                currentConditions = JSON.parse(data);
                 console.log("Success");
+                displayWeatherData();
             },
             error: function() {
                 console.log("Error");
@@ -38,4 +42,10 @@ $(function() {
         weatherData($ZCTB.val());
     };
     
+    var displayWeatherData = function(){
+        $results.html(
+            "Temp: " + currentConditions.current_observation.temperature_string + "<br />" +
+            "Wind: " + currentConditions.current_observation.wind_string + " " + currentConditions.current_observation.wind_mph + " MPH (" + currentConditions.current_observation.wind_kph + " KPH) <br />"
+        );        
+    };
 });
