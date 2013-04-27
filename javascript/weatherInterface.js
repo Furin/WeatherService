@@ -13,6 +13,9 @@ $(function() {
     
     // Setup form event on submit button
     $weatherService.submit(function(){
+        // reset result box to nothing
+        $results.html('');
+        
         captureZipCode();
         return false;
     });
@@ -39,13 +42,23 @@ $(function() {
     var captureZipCode = function(){
         // Reference to Zip Code Text Box
         $ZCTB = $("#zipCodeTextBox");
-        weatherData($ZCTB.val());
+        // Make sure something was populated in the zip box
+        if ($ZCTB.val()) {
+          weatherData($ZCTB.val());
+        } else {
+          $results.html("Please enter a value in the zip code box.");
+        }
     };
     
     var displayWeatherData = function(){
-        $results.html(
-            "Temp: " + currentConditions.current_observation.temperature_string + "<br />" +
-            "Wind: " + currentConditions.current_observation.wind_string + " " + currentConditions.current_observation.wind_mph + " MPH (" + currentConditions.current_observation.wind_kph + " KPH) <br />"
-        );        
+        // if we receive an error from
+        if (!currentConditions.response.error) {
+          $results.html(
+              "Temp: " + currentConditions.current_observation.temperature_string + "<br />" +
+              "Wind: " + currentConditions.current_observation.wind_string + " " + currentConditions.current_observation.wind_mph + " MPH (" + currentConditions.current_observation.wind_kph + " KPH) <br />"
+          );
+        } else {
+          $results.html(currentConditions.response.error.description);
+        }        
     };
 });
