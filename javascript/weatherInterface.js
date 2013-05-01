@@ -19,7 +19,7 @@ $(function() {
         captureZipCode();
         return false;
     });
-      
+	
     // Function to query WeatherUnderground through proxy using the zipCode
     var weatherData = function(zipCode) {
         apiKey = "14aa95e36677fa2e";
@@ -59,6 +59,17 @@ $(function() {
           );
         } else {
           $results.html(currentConditions.response.error.description);
-        }        
+        }
     };
+	
+	var locationAutoComplete = function () {
+		var locationInput = document.getElementById('locationSearch');
+		var options = {
+			types: ['(cities)']
+		};
+		
+		autoComplete = new google.maps.places.Autocomplete(locationInput, options);
+	}; 
+	
+	locationAutoComplete();
 });
