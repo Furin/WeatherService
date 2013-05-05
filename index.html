@@ -2,7 +2,7 @@
 	"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-        <!-- Last updated by Nick Husby on 4/17/2013 -->
+        <!-- Last updated by Damian Orlikowski on 5/5/2013 -->
 		<title>Weather Service - By Team Awesome</title>
 		
 		<link rel="stylesheet" href="styles/gangnam.css">
@@ -11,9 +11,12 @@
 		<div id="wrapper">
       <form id="weatherService">
         <label for="zipCodeTextBox">ZIP code: </label><input id="zipCodeTextBox" type="text" placeholder="ZIP">
-        <label for="locationSearch">Location Search: </label><input id="locationSearch" type="text" placeholder="Location">
         <input id="submitButton" type="submit" value="Submit">
       </form>
+	  <form id="autoCompleteForm">
+		<label for="locationSearch">Location Search: </label><input id="locationSearch" type="text" placeholder="Location">
+		
+	  </form>
       <h1>Current Conditions</h1>
       <div id="results">
       </div>
