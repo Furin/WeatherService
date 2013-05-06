@@ -18,15 +18,12 @@ $(function() {
     $weatherService.submit(function(){
         // reset result box to nothing
         $results.html('');        
-		captureZipCode();		
+        captureZipCode();		
         return false;
     });	
 	
 	// Set up the auto complete field
 	locationAutoComplete();	
-	
-	// Auto complete event
-	google.maps.event.addListener(autoComplete, 'place_changed', queryAutoComplete);
 	
 	// Set up submit event on autoCompleteForm
 	$autoCompleteForm.submit(function(){	
