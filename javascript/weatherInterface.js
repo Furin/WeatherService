@@ -4,7 +4,9 @@ $(function() {
 
     // Parsed JSON object containing current condiditons
     var currentConditions;
-
+	
+	changeAfterSelection = true;
+	
     // Reference to weatherService form
     $weatherService = $('#weatherService');
 	
@@ -26,10 +28,22 @@ $(function() {
 	locationAutoComplete();	
 	
 	// Set up submit event on autoCompleteForm
-	$autoCompleteForm.submit(function(){	
+	$autoCompleteForm.submit(function(){
 		$results.html('');
-		queryAutoComplete();
+		if (changeAfterSelection) {
+			selectFirstResult();
+		} else {
+			queryAutoComplete();
+		}
 		return false;		
+	});
+	
+	google.maps.event.addListener(autoComplete, 'place_changed', function() {
+		changeAfterSelection = false;
+	});
+	
+	$('#locationSearch').change(function() {
+		changeAfterSelection = true;
 	});
 });
 
@@ -123,6 +137,18 @@ var queryAutoComplete = function() {
 	}
 };
 	
+function selectFirstResult() {
+	$(".pac-container").hide();
+	var firstResult = $(".pac-container .pac-item:first").text();
 	
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode({"address":firstResult }, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			var lat = results[0].geometry.location.lat(),
+				lng = results[0].geometry.location.lng();
+				weatherDataLatLong(lat, lng);
+		}
+	});   
+ }	
 	
 	
